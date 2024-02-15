@@ -39,7 +39,7 @@ if (isset($_GET["hapus_user"])) {
 
     if ($sql) {
         $_SESSION["eksekusi"] = "data berhasil dihapus";
-        header("location: index.php");
+        header("location:../customer.php");
     } else {
         echo $sql;
     }

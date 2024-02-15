@@ -9,10 +9,6 @@
     // untuk menampilkan username yang login
     $namepengguna = $_SESSION['user']['username'];
 
-
-    $query = "SELECT * FROM tb_user;";
-    $sql = mysqli_query($koneksi, $query);
-    $no = 0;
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +28,7 @@
     <link href="datatables/datatables.css" rel="stylesheet">
     <script src="datatables/datatables.js"></script>
 
-    <title>Admin</title>
+    <title>Home Admin</title>
 
     <style>
     .hoverlink:hover {
@@ -118,91 +114,12 @@
     <div class="mb-3" style="padding: 10px; float: right; width: 85%; min-height: 100vh; height:fit-content;">
         <figure class="mt-3">
             <blockquote class="blockquote">
-                <p>Data Customers</p>
+                <strong><p>Home Admin</p></strong>
             </blockquote>
             <figcaption class="blockquote-footer">
-                CRUD <cite title="Source Title">Creat Read Update Delete</cite>
+                welcome, <?php echo $namepengguna ; ?>
             </figcaption>
         </figure>
-        
-        <!-- button tambah data -->
-        <a href="kelola.php" type="button" class="btn btn-primary mb-3" >
-            <i class="fa fa-plus" aria-hidden="true"></i>
-            Tambah Data
-        </a>
-
-        <!-- jika ada session maka alert akan tampil -->
-        <?php
-            if (isset($_SESSION['eksekusi'])) :
-        ?>
-            <div class="alert alert-info alert-dismissible fade show" role="alert">
-                <strong>
-                    <?php
-                        echo $_SESSION['eksekusi'];
-                    ?>
-                </strong>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        <?php
-            session_destroy(); // mebghapus session
-            endif;
-        ?>
-
-        <!-- tabel data -->
-        <div class="table-responsive">
-            <table id="datatable" class="table align-middle table-bordered table-hover">
-                <thead> <!-- judul tabel -->
-                    <tr>
-                        <th><center>No.</center></th>
-                        <th>Email</th>
-                        <th>Username</th>
-                        <th>Jenis Kelamin</th>
-                        <th>nohp</th>
-                        <th>Alamat</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <!-- untuk menampilkan semua data dengan while -->
-                    <?php
-                        while( $result = mysqli_fetch_assoc($sql) ){
-                    ?>
-                        <tr>
-                            <td><center>
-                                <?php echo ++$no; ?>
-                            </center></td>
-                            <td>
-                                <?php echo $result["email_user"]; ?>
-                            </td>
-                            <td>
-                                <?php echo $result["username"]; ?>
-                            </td>
-                            <td>
-                                <?php echo $result["jenis_kelamin"]; ?>
-                            </td>
-                            <td>
-                                <?php echo $result["no_hp"]; ?>
-                            </td>
-                            <td>
-                                <?php echo $result["alamat"]; ?>
-                            </td>
-                            <td>
-                                <a href="kelola.php?ubah=<?php echo $result["id_user"]; ?>" type="button" class="btn btn-success btn-sm">
-                                    <i class="fa fa-pencil" aria-hidden="true"></i>
-                                    Ubah
-                                </a>
-                                <a href="proses.php?hapus=<?php echo $result["id_user"]; ?>" type="button" class="btn btn-danger btn-sm" onclick="return confirm('Yakin?')" >
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                    Hapus
-                                </a>
-                            </td>
-                        </tr>
-                    <?php
-                        }
-                    ?>
-                </tbody>
-            </table>
-        </div>
     </div>
 
 </body>
