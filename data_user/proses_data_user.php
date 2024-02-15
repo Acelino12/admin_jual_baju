@@ -30,6 +30,17 @@ if (isset($_POST["aksi"])) {
     }
 }
 
-if (isset($_POST["hapus"])) {
+if (isset($_GET["hapus_user"])) {
+    $id_user = $_GET['hapus_user'];
     
+    // menghapus table data
+    $query = "DELETE FROM tb_user WHERE id_user= '$id_user' ";
+    $sql = mysqli_query($GLOBALS['koneksi'], $query);
+
+    if ($sql) {
+        $_SESSION["eksekusi"] = "data berhasil dihapus";
+        header("location: index.php");
+    } else {
+        echo $sql;
+    }
 }

@@ -193,7 +193,7 @@
                                     <i class="fa fa-pencil" aria-hidden="true"></i>
                                     Ubah
                                 </a>
-                                <a href="data_user/proses_data_user.php?hapus__user=<?php echo $result["id_user"]; ?>" type="button" class="btn btn-danger btn-sm" onclick="return confirm('Yakin?')" >
+                                <a href="data_user/proses_data_user.php?hapus_user=<?php echo $result["id_user"]; ?>" type="button" class="btn btn-danger btn-sm" onclick="return confirm('Yakin?')" >
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                     Hapus
                                 </a>
