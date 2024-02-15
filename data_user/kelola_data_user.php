@@ -108,7 +108,7 @@
                     <?php
                         if (isset($_GET['ubah_user'])) {
                     ?>
-                        <button type="submit" name="aksi" value="edit" class="btn btn-primary">
+                        <button type="submit" name="aksi" value="ubah" class="btn btn-primary">
                             <i class="fa fa-floppy-o" aria-hidden="true"></i>
                             Simpan Perubahan
                         </button>

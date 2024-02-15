@@ -1,6 +1,8 @@
 <?php 
 
 include "tambah.php";
+include "ubah.php";
+include "../db/koneksi.php";
 session_start();
 
 if (isset($_POST["aksi"])) {
@@ -16,7 +18,15 @@ if (isset($_POST["aksi"])) {
         }
     }
     else if ($_POST["aksi"] == "ubah") {
+        $berhasil = ubah_data($_POST);
 
+        if ($berhasil) {
+            $_SESSION["eksekusi"] = "data berhasil edit";
+            header("location:../customer.php");
+        }
+        else {
+            var_dump($berhasil);
+        }
     }
 }
 
