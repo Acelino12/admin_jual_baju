@@ -9,6 +9,9 @@
     // untuk menampilkan username yang login
     $namepengguna = $_SESSION['user']['username'];
 
+    $query_user = "SELECT * FROM tb_user;";
+    $sql_user = mysqli_query($koneksi,$query_user);
+    $row_user = mysqli_num_rows($sql_user);
 ?>
 
 <!DOCTYPE html>
@@ -28,6 +31,8 @@
     <link href="datatables/datatables.css" rel="stylesheet">
     <script src="datatables/datatables.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <title>Home Admin</title>
 
     <style>
@@ -40,6 +45,38 @@
         width: full;
         height: 100%;
         background-color: #f2f2f2;
+    }
+
+    .bab-container{
+        padding: 5px; 
+        border-radius: 10px; 
+        width: 100%;  
+        display: flex;
+        background-color: #DADFE0;
+    }
+    .isi-container{
+        flex: 1; 
+        background-color: #9BD6D9; 
+        height: 120px; 
+        margin: 10px; 
+        padding: 5px; 
+        border-radius: 10px;
+        transition: 500ms; 
+    }
+
+    .isi-container:hover{
+        background-color: #68C0CE;
+        transition: 500ms; 
+    }
+
+    .isi-container-2{
+        flex: 1; 
+        background-color: #9BD6D9; 
+        height: 300px; 
+        margin: 10px; 
+        padding: 5px; 
+        border-radius: 10px;
+        transition: 500ms; 
     }
 
     </style>
@@ -55,7 +92,7 @@
 <body>
     <!-- navbar -->
     <nav class="bg-light" style="position:fixed; padding: 10px; float: left; width: 15%; height: 100vh;" >
-        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+        <a href="index.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
             <img src="logo/wa.png" alt="logo" style="width: 40px; margin: auto;" >
         </a> 
 
@@ -120,7 +157,81 @@
                 welcome, <?php echo $namepengguna ; ?>
             </figcaption>
         </figure>
+
+        <div class="mt-3 bab-container">
+            <div class="isi-container" >
+                <h3>Jumlah User</h3>
+                <h3 style=" text-align: center; " ><?php echo $row_user; ?></h3>
+                <a href="customer.php" class="align-items-center link-dark text-decoration-none" >
+                    <p style="float: right; margin-right: 5px; " >view detail ></p>
+                </a>
+            </div>
+            <div class="isi-container" >
+                <h3>Jumlah Product</h3>
+                <h3 style=" text-align: center; " ><?php echo $row_user; ?></h3>
+                <a href="customer.php" class="align-items-center link-dark text-decoration-none" >
+                    <p style="float: right; margin-right: 5px; " >view detail ></p>
+                </a>
+            </div>
+            <div class="isi-container" >
+                <h3>Jumlah Order</h3>
+                <h3 style=" text-align: center; " ><?php echo $row_user; ?></h3>
+                <a href="customer.php" class="align-items-center link-dark text-decoration-none" >
+                    <p style="float: right; margin-right: 5px; " >view detail ></p>
+                </a>
+            </div>
+        </div>
+
+        <div class="mt-2 bab-container" >
+            <div class="isi-container-2" >
+                <h2 style="text-align: center;" >Chart Order</h2>
+                <div style="width: 100%; ">
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
+            <div class="isi-container-2" >
+                <h2>asdasd</h2>
+            </div>
+        </div>        
     </div>
+
+    
+
+
+<?php
+    // Contoh data dari PHP
+    $data = [10, 20, 30, 40, 50];
+?>
+
+<script>
+  // Inisialisasi data dari PHP
+    var dataFromPHP = <?php echo json_encode($data); ?>;
+
+    // Mengambil elemen canvas
+    var ctx = document.getElementById('myChart').getContext('2d');
+
+    // Membuat chart dengan Chart.js
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+        labels: ['Label 1', 'Label 2', 'Label 3', 'Label 4', 'Label 5'],
+        datasets: [{
+            label: 'Contoh Data',
+            data: dataFromPHP,
+            backgroundColor: 'rgb(51, 51, 255, 0.5)',
+            borderColor: 'rgba(0, 0, 0, 1)',
+            borderWidth: 1
+        }]
+        },
+        options: {
+        scales: {
+            y: {
+            beginAtZero: true
+            }
+        }
+        }
+    });
+</script>
 
 </body>
 </html>

@@ -61,7 +61,7 @@
 <body>
     <!-- navbar -->
     <nav class="bg-light" style="position:fixed; padding: 10px; float: left; width: 15%; height: 100vh;" >
-        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+        <a href="index.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
             <img src="logo/wa.png" alt="logo" style="width: 40px; margin: auto;" >
         </a> 
 
