@@ -2,22 +2,19 @@
     include "db/koneksi.php";
     session_start();
 
-    // jika user belum login maka akan di arahkan ke halaman login.php
     if (!isset($_SESSION['user'])){
         header('location:login.php');
     }
-    // untuk menampilkan username yang login
+
+    // mengambil username admin yang login
     $namepengguna = $_SESSION['user']['username'];
 
-    // jumlah data user
-    $query_user = "SELECT * FROM tb_user;";
-    $sql_user = mysqli_query($koneksi,$query_user);
-    $row_user = mysqli_num_rows($sql_user);
+    // agar halaman tambah/edit data produk tidak dapat dimasuki jika admin belum melakukan login
+    $_SESSION['log'] = $namepengguna;
 
-    // jumlah data product
-    $query_product = "SELECT * FROM tb_product";
-    $sql_product = mysqli_query($koneksi,$query_product);
-    $row_product = mysqli_num_rows($sql_product);
+    $query = "SELECT * FROM tb_product";
+    $sql = mysqli_query($koneksi,$query);
+    $no = 0;
 
 ?>
 
@@ -38,9 +35,7 @@
     <link href="datatables/datatables.css" rel="stylesheet">
     <script src="datatables/datatables.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <title>Home Admin</title>
+    <title>Data Produk</title>
 
     <style>
     .hoverlink:hover {
@@ -52,38 +47,6 @@
         width: full;
         height: 100%;
         background-color: #f2f2f2;
-    }
-
-    .bab-container{
-        padding: 5px; 
-        border-radius: 10px; 
-        width: 100%;  
-        display: flex;
-        background-color: #DADFE0;
-    }
-    .isi-container{
-        flex: 1; 
-        background-color: #9BD6D9; 
-        height: 120px; 
-        margin: 10px; 
-        padding: 5px; 
-        border-radius: 10px;
-        transition: 500ms; 
-    }
-
-    .isi-container:hover{
-        background-color: #68C0CE;
-        transition: 500ms; 
-    }
-
-    .isi-container-2{
-        flex: 1; 
-        background-color: #9BD6D9; 
-        height: 300px; 
-        margin: 10px; 
-        padding: 5px; 
-        border-radius: 10px;
-        transition: 500ms; 
     }
 
     </style>
@@ -142,7 +105,7 @@
 
         <div class="dropdown">
             <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                <img src="https://github.com/mdo.png" alt=""  width="32" height="32" class="rounded-circle me-2">
                 <span style="display: inline-block; max-width: 100%; overflow: hidden; white-space: nowrap;"><?php echo $namepengguna; ?></span>
             </a>
             <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
@@ -158,87 +121,88 @@
     <div class="mb-3" style="padding: 10px; float: right; width: 85%; min-height: 100vh; height:fit-content;">
         <figure class="mt-3">
             <blockquote class="blockquote">
-                <strong><p>Home Admin</p></strong>
+                <p>Data Product</p>
             </blockquote>
             <figcaption class="blockquote-footer">
-                welcome, <?php echo $namepengguna ; ?>
+                CRUD <cite title="Source Title">Creat Read Update Delete</cite>
             </figcaption>
         </figure>
+        
+        <!-- button tambah data -->
+        <a href="data_product/kelola.php" type="button" class="btn btn-primary mb-3" >
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            Tambah Data
+        </a>
 
-        <div class="mt-3 bab-container">
-            <div class="isi-container" >
-                <h3>Jumlah User</h3>
-                <h3 style=" text-align: center; " ><?php echo $row_user; ?></h3>
-                <a href="customer.php" class="align-items-center link-dark text-decoration-none" >
-                    <p style="float: right; margin-right: 5px; " >view detail ></p>
-                </a>
+        <!-- jika ada session maka alert akan tampil -->
+        <?php
+            if (isset($_SESSION['eksekusi'])) :
+        ?>
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <strong>
+                    <?php
+                        echo $_SESSION['eksekusi'];
+                    ?>
+                </strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-            <div class="isi-container" >
-                <h3>Jumlah Product</h3>
-                <h3 style=" text-align: center; " ><?php echo $row_product; ?></h3>
-                <a href="customer.php" class="align-items-center link-dark text-decoration-none" >
-                    <p style="float: right; margin-right: 5px; " >view detail ></p>
-                </a>
-            </div>
-            <div class="isi-container" >
-                <h3>Jumlah Order</h3>
-                <h3 style=" text-align: center; " ><?php echo $row_user; ?></h3>
-                <a href="customer.php" class="align-items-center link-dark text-decoration-none" >
-                    <p style="float: right; margin-right: 5px; " >view detail ></p>
-                </a>
-            </div>
+        <?php
+            unset($_SESSION['eksekusi']); // menghapus session
+            endif;
+        ?>
+
+        <!-- tabel data -->
+        <div class="table-responsive">
+            <table id="datatable" class="table align-middle table-bordered table-hover">
+                <thead> <!-- judul tabel -->
+                    <tr>
+                        <th><center>No.</center></th>
+                        <th>Nama Produk</th>
+                        <th>Harga</th>
+                        <th>Stok</th>
+                        <th>Gambar</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <!-- untuk menampilkan semua data dengan while -->
+                    <?php
+                        while( $result = mysqli_fetch_assoc($sql) ){
+                    ?>
+                        <tr>
+                            <td><center>
+                                <?php echo ++$no; ?>
+                            </center></td>
+                            <td>
+                                <?php echo $result["name_product"]; ?>
+                            </td>
+                            <td>
+                                <?php echo $result["harga"]; ?>
+                            </td>
+                            <td>
+                                <?php echo $result["stok"]; ?>
+                            </td>
+                            <td>
+                                <img src="data_product/img/<?php echo $result["gam1"]; ?>" alt="gambar" style="width: 150px;" >
+                            </td>
+                            <td>
+                                <a href="data_product/kelola.php?ubah=<?php echo $result["id_product"]; ?>" type="button" class="btn btn-success btn-sm">
+                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                    Ubah
+                                </a>
+                                <a href="data_product/proses.php?hapus=<?php echo $result["id_product"]; ?>" type="button" class="btn btn-danger btn-sm" onclick="return confirm('Yakin?')" >
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                    Hapus
+                                </a>
+                            </td>
+                        </tr>
+                    <?php
+                        }
+                    ?>
+                </tbody>
+            </table>
         </div>
-
-        <div class="mt-2 bab-container" >
-            <div class="isi-container-2" >
-                <h2 style="text-align: center;" >Chart Order</h2>
-                <div style="width: 100%; ">
-                    <canvas id="myChart"></canvas>
-                </div>
-            </div>
-            <div class="isi-container-2" >
-                <h2>asdasd</h2>
-            </div>
-        </div>        
     </div>
-
-    
-
-
-<?php
-    // Contoh data dari PHP
-    $data = [10, 20, 30, 40, 50];
-?>
-
-<script>
-  // Inisialisasi data dari PHP
-    var dataFromPHP = <?php echo json_encode($data); ?>;
-
-    // Mengambil elemen canvas
-    var ctx = document.getElementById('myChart').getContext('2d');
-
-    // Membuat chart dengan Chart.js
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-        labels: ['Label 1', 'Label 2', 'Label 3', 'Label 4', 'Label 5'],
-        datasets: [{
-            label: 'Contoh Data',
-            data: dataFromPHP,
-            backgroundColor: 'rgb(51, 51, 255, 0.5)',
-            borderColor: 'rgba(0, 0, 0, 1)',
-            borderWidth: 1
-        }]
-        },
-        options: {
-        scales: {
-            y: {
-            beginAtZero: true
-            }
-        }
-        }
-    });
-</script>
 
 </body>
 </html>
