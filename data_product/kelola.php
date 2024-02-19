@@ -63,7 +63,7 @@
             <div class="mb-3 row">
                 <label for="foto1" class="col-sm-2 col-form-label ">Foto 1</label>
                 <div class="col-sm-4">
-                    <input class="form-control" type="file" name="foto1" id="foto1" accept="image/*" value="<?php echo $gam1; ?>"> <!-- accept agar fokus kegambar -->
+                    <input class="form-control" type="file" name="foto1" id="foto1" accept="image/*" <?php if(!isset($_GET['ubah'])){ echo "required" ;} ?> > <!-- accept agar fokus kegambar -->
                 </div>  
                 <div class="col-sm-4">
                     <img src="img/<?php echo $gam1; ?>" alt="gambar 1" style="width: 150px; height: 150px;" > <!-- accept agar fokus kegambar -->
@@ -73,7 +73,7 @@
             <div class="mb-3 row">
                 <label for="foto2" class="col-sm-2 col-form-label ">Foto 2</label>
                 <div class="col-sm-4">
-                    <input accept="image/*" name="foto2" type="file" id="foto2" class="form-control" value="<?php echo $gam2; ?>" > <!-- accept agar fokus kegambar -->
+                    <input accept="image/*" name="foto2" type="file" id="foto2" class="form-control" <?php if(!isset($_GET['ubah'])){ echo "required" ;} ?> > <!-- accept agar fokus kegambar -->
                 </div>  
                 <div class="col-sm-4">
                     <img src="img/<?php echo $gam2; ?>" alt="gambar 2" style="width: 150px; height: 150px; " > <!-- accept agar fokus kegambar -->
