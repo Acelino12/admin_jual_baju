@@ -127,12 +127,6 @@
                 CRUD <cite title="Source Title">Data Orderan</cite>
             </figcaption>
         </figure>
-        
-        <!-- button tambah data -->
-        <a href="data_order/kelola.php" type="button" class="btn btn-primary mb-3" >
-            <i class="fa fa-plus" aria-hidden="true"></i>
-            Tambah Data
-        </a>
 
         <!-- jika ada session maka alert akan tampil -->
         <?php
