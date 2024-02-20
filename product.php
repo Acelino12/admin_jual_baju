@@ -109,8 +109,8 @@
                 <span style="display: inline-block; max-width: 100%; overflow: hidden; white-space: nowrap;"><?php echo $namepengguna; ?></span>
             </a>
             <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-                <li><a class="dropdown-item" href="#">Profile</a></li>
-                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><a class="dropdown-item" href="data_admin/profil.php">Profile</a></li>
+                <li><a class="dropdown-item" href="data_admin/setting.php">Settings</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="logout.php">Sign out</a></li>
             </ul>
