@@ -19,6 +19,10 @@
     $sql_product = mysqli_query($koneksi,$query_product);
     $row_product = mysqli_num_rows($sql_product);
 
+    // jumlah data order
+    $query_order = "SELECT * FROM tb_order";
+    $sql_order = mysqli_query($koneksi,$query_order);
+    $row_order = mysqli_num_rows($sql_order);
 ?>
 
 <!DOCTYPE html>
@@ -146,8 +150,8 @@
                 <span style="display: inline-block; max-width: 100%; overflow: hidden; white-space: nowrap;"><?php echo $namepengguna; ?></span>
             </a>
             <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-                <li><a class="dropdown-item" href="#">Profile</a></li>
-                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><a class="dropdown-item" href="data_admin/profil.php">Profile</a></li>
+                <li><a class="dropdown-item" href="data_admin/setting.php">Settings</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="logout.php">Sign out</a></li>
             </ul>
@@ -176,14 +180,14 @@
             <div class="isi-container" >
                 <h3>Jumlah Product</h3>
                 <h3 style=" text-align: center; " ><?php echo $row_product; ?></h3>
-                <a href="customer.php" class="align-items-center link-dark text-decoration-none" >
+                <a href="product.php" class="align-items-center link-dark text-decoration-none" >
                     <p style="float: right; margin-right: 5px; " >view detail ></p>
                 </a>
             </div>
             <div class="isi-container" >
                 <h3>Jumlah Order</h3>
-                <h3 style=" text-align: center; " ><?php echo $row_user; ?></h3>
-                <a href="customer.php" class="align-items-center link-dark text-decoration-none" >
+                <h3 style=" text-align: center; " ><?php echo $row_order; ?></h3>
+                <a href="order.php" class="align-items-center link-dark text-decoration-none" >
                     <p style="float: right; margin-right: 5px; " >view detail ></p>
                 </a>
             </div>

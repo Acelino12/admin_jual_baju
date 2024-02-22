@@ -52,6 +52,8 @@
             <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
 
             <p class="daftar" >belum punya akun ? <a href="register.php">daftar sini</a></p>
+            <p class="daftar" >ingin membeli ? <a href="web_user/home.php">cari barang di sini</a></p>
+
         </form>
     </main>
 </body>
