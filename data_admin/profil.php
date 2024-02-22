@@ -5,7 +5,7 @@
     session_start();
 
     if (!isset($_SESSION['user'])){
-        header('location:login.php');
+        header('location:../login.php');
     }
 
     $username = $_SESSION['user']['username'];
@@ -25,8 +25,6 @@
     <!-- Bootstrap 5 -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <script src="js/bootstrap.bundle.min.js"></script>
-    <!-- Vue -->
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <title>Profil Admin</title>
 </head>
 <body>
@@ -41,22 +39,8 @@
         <br>
         <label for="name">Password :</label>
         <input type="text" readonly value="<?php echo $password; ?>" >
+        <a href="../index.php">back</a>
     </div>
-
-    <script>
-        
-        const app = {
-            data() {
-                return {
-                    pass :false
-                }
-            },
-            methods: {
-                
-            },
-        }
-        Vue.createApp(app).mount('#app');
-    </script>
 
 </body>
 </html>
