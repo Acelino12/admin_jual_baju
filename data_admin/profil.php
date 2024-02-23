@@ -29,7 +29,7 @@
 </head>
 <body>
 <div id="app" style="width: 90%; background-color: #F6F3F3; border-radius: 10px; margin: 50px auto 0px auto; padding-bottom:10px; height:500px; box-shadow: 0px 0px 10px #2A2424; " >
-        <h2 style="text-align: center; padding-top: 15px; " >Orderan</h2>
+        <h2 style="text-align: center; padding-top: 15px; " >Profil Admin</h2>
         <hr>
         <label for="name">Username :</label>
         <input type="text" readonly value="<?php echo $username; ?>" >
