@@ -40,6 +40,7 @@
             transition: 0.5s;
             cursor: pointer;
             padding: 5px;
+            color: black;
         }
     </style>
 </head>
