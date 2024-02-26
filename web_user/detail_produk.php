@@ -13,12 +13,21 @@
         $sql = mysqli_query($koneksi,$query);
         $row = mysqli_fetch_array($sql);
 
+        $id_product = $row["id_product"];
         $name_product = $row["name_product"];
         $harga = $row["harga"];
         $stok = $row["stok"];
+        $stok_sisa = $row["sisa"];
+        $terjual = $row["terjual"];
         $detail = $row["detail"];
         $gam1 = $row["gam1"];
         $gam2 = $row["gam2"];
+
+    }
+
+    if (isset($_SESSION['login_user'])){
+        $nameuser = $_SESSION['login_user']['username'];
+        $_SESSION['beli'] = $nameuser;
     }
 ?>
 
@@ -62,6 +71,7 @@
     </style>
 </head>
 <body>
+    <!-- header -->
     <div style="width: 100%; height: 60px; background-color: aliceblue; " >
         <div style="width: 50px; height: 100%; float: left; margin: 15px 10px 0px 10px ; " >
             <div style=" width: 50px; display: flex; height: 30px; text-align: center; align-items: center;" >
@@ -71,31 +81,47 @@
 
         <!-- kanan -->
         <div style=" display: flex; float: right; width: 250px; height: 100%; text-align: center; align-items: center; " >
-            <div style=" margin: auto; width: 60%; display: flex; " >
-                <a href="" class="link" >
-                    <div style="width: 50px; height:30px; background-color: #09E74F; border-radius: 5px; " >
-                        <p>Login</p>
-                    </div>
-                </a>
-                <a href="" class="link">
-                    <div style="width: 70px; height:30px; background-color: #E70909; border-radius: 5px; " >
-                        <p >register</p>
-                    </div>
-                </a>
-            </div>
             <?php 
                 if (isset($_SESSION['login_user'])){
             ?>
-                <div ></div>
+                <div>
+                    <a href="" class="link">
+                        <div class="dropdown">
+                            <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://github.com/mdo.png" alt=""  width="32" height="32" class="rounded-circle me-2">
+                                <span style="display: inline-block; max-width: 100%; overflow: hidden; white-space: nowrap;"><?php echo $nameuser; ?></span>
+                            </a>
+                            <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+                                <li><a class="dropdown-item" href="data_admin/profil.php">Profile</a></li>
+                                <li><a class="dropdown-item" href="data_admin/setting.php">Settings</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="logout_user.php">Sign out</a></li>
+                            </ul>
+                        </div>
+                    </a>
+                </div>
             <?php 
             } else {
             ?>
-                <div></div>
+                <div style=" margin: auto; width: 60%; display: flex; " >
+                    <a href="login_user.php" class="link" >
+                        <div style="width: 50px; height:30px; background-color: #09E74F; border-radius: 5px; " >
+                            <p>Login</p>
+                        </div>
+                    </a>
+                    <a href="register_user.php" class="link">
+                        <div style="width: 70px; height:30px; background-color: #E70909; border-radius: 5px; " >
+                            <p >register</p>
+                        </div>
+                    </a>
+                </div>
             <?php 
             }
             ?>
         </div>
     </div>
+
+    <!-- isi -->
     <div style="width: 100%; position:absolute; padding-bottom:10px; " >
         <div style="width: 97%; border-radius: 10px; background-color: #F6F3F3; height:fit-content; padding:1px; margin: 10px auto 0px auto; box-shadow: 0px 0px 10px #2A2424; " >
             <h2 style="text-align: center; padding-top: 15px; " >Detail : <?php echo $name_product ?></h2>
@@ -126,7 +152,7 @@
                                     <td style="width: 100%;" ><p style="margin: 0; padding: 0; font-size: 30px; font-weight: bold;"><?php echo $name_product ?></p></td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 100%;"><p style="margin: 0; padding: 0;" >Terjual <?php echo $stok ?>+</p></td>
+                                    <td style="width: 100%;"><p style="margin: 0; padding: 0;" >Terjual <?php echo $terjual; ?>+</p></td>
                                 </tr>
                                 <tr>
                                     <td style="width: 100%;" ><p style="margin: 0; padding: 0; font-weight: bold; font-size: 20px; " ><?php echo formatRupiah($harga) ?></p></td>
@@ -144,23 +170,31 @@
                     <div style=" width: 400px; margin: 10px auto 0px auto; position: fixed; " >
                         <div style=" width:300px; margin: 0px auto 0px auto; position:relative; " >
                             <form method="post" action="proses_beli.php">
-                                <div style="width: 300px; height: 150px; border-radius: 10px; box-shadow: 0px 0px 3px #2A2424; background-color: #FBFBFB; padding: 3px;">
+                                <div style="width: 300px; height: 200px; border-radius: 10px; box-shadow: 0px 0px 3px #2A2424; background-color: #FBFBFB; padding: 3px;">
                                     <p>Atur jumlah pembelian</p>
+                                    <input hidden name="id_product" class="" type="text" value="<?php echo $id_product ?>">
+                                    <p>Stok: <?php echo $stok_sisa ; ?></p>
                                     <div class="">
                                         <button aria-label="Kurangi 1" class="css-6cobzs" tabindex="-1" onclick="changeQuantity(-1); return false">
                                             <svg class="unf-icon" viewBox="0 0 24 24" width="16px" height="16px" fill="var(--NN500, #BFC9D9)" style="display: inline-block; vertical-align: middle;">
                                                 <path d="M20 12.75H4a.75.75 0 110-1.5h16a.75.75 0 110 1.5z"></path>
                                             </svg>
                                         </button>
-                                        <input name="jumlahbeli" id="jumlahbeli" aria-valuenow="1" aria-valuemin="1" aria-valuemax="5000" class="" data-unify="QuantityEditor" role="spinbutton" type="text" value="1">
+                                        <input name="jumlahbeli" id="jumlahbeli" aria-valuenow="1" aria-valuemin="1" aria-valuemax="<?php echo $stok_sisa; ?>" class="" data-unify="QuantityEditor" role="spinbutton" type="number" value="1">
+                                        
                                         <button aria-label="Tambah 1" class="css-6cobzs" tabindex="-1" onclick="changeQuantity(1); return false">
                                             <svg class="unf-icon" viewBox="0 0 24 24" width="16px" height="16px" fill="var(--GN500, #00AA5B)" style="display: inline-block; vertical-align: middle;">
                                                 <path d="M20 11.25h-7.25V4a.75.75 0 10-1.5 0v7.25H4a.75.75 0 100 1.5h7.25V20a.75.75 0 101.5 0v-7.25H20a.75.75 0 100-1.5z"></path>
                                             </svg>
                                         </button>
                                     </div>
+                                    <br>
                                     <div>
-                                        <button type="submit" >Beli</button>
+                                        <?php if(isset($_SESSION['login_user'])){ ?>
+                                            <button type="submit" >Beli</button>
+                                        <?php } else { ?>
+                                            <button onclick="login(); return false" >Beli</button>
+                                        <?php } ?>
                                     </div>
                                 </div>
                             </form>
@@ -182,9 +216,13 @@
                 newQty = Math.max(newQty, 1);
 
                 // Batasi kuantitas ke nilai maksimum tertentu (5000 dalam contoh ini)
-                newQty = Math.min(newQty, 5000);
+                newQty = Math.min(newQty, <?php echo $stok_sisa; ?>);
 
                 qtyInput.value = newQty;
+            }
+
+            function login() {
+                return alert("login terlebih dahulu !");
             }
 
         </script>

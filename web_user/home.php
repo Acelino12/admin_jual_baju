@@ -11,6 +11,10 @@
         return 'Rp ' . number_format($angka, 0, ',', '.');
     }
 
+    if (isset($_SESSION['login_user'])){
+        $nameuser = $_SESSION['login_user']['username'];
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -42,14 +46,71 @@
             padding: 5px;
             color: black;
         }
+
+        .link{
+            flex-grow: 1; 
+            text-decoration: none;
+            color: #2A2424; 
+        }
     </style>
 </head>
 <body>
-    <div style="width: 100%; height: 60px; background-color: aliceblue;  " >
-        <div>
-            <a href="../login.php">jadi admin</a>
+    <!-- header -->
+    <div style="width: 100%; height: 60px; background-color: aliceblue; " >
+
+        <!-- kiri -->
+        <div style="width: 100px; height: 100%; float: left; margin: 15px 10px 0px 10px ; " >
+            <?php if(!isset($_SESSION['login_user'])){ ?>
+                <div style=" width: 100px; display: flex; height: 30px; text-align: center; align-items: center;" >
+                    <a href="../index.php" class="btn_back btn btn-danger btn-sm" style="text-align:center;" >jadi Admin</a>
+                </div>
+            <?php } ?>
+        </div>
+
+        <!-- kanan -->
+        <div style=" display: flex; float: right; width: 250px; height: 100%; text-align: center; align-items: center; " >
+            <?php 
+                if (isset($_SESSION['login_user'])){
+            ?>
+                <div>
+                    <a href="" class="link">
+                        <div class="dropdown">
+                            <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://github.com/mdo.png" alt=""  width="32" height="32" class="rounded-circle me-2">
+                                <span style="display: inline-block; max-width: 100%; overflow: hidden; white-space: nowrap;"><?php echo $nameuser; ?></span>
+                            </a>
+                            <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+                                <li><a class="dropdown-item" href="data_admin/profil.php">Profile</a></li>
+                                <li><a class="dropdown-item" href="data_admin/setting.php">Settings</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="logout_user.php">Sign out</a></li>
+                            </ul>
+                        </div>
+                    </a>
+                </div>
+            <?php 
+            } else {
+            ?>
+                <div style=" margin: auto; width: 60%; display: flex; " >
+                    <a href="login_user.php" class="link" >
+                        <div style="width: 50px; height:30px; background-color: #09E74F; border-radius: 5px; " >
+                            <p>Login</p>
+                        </div>
+                    </a>
+                    <a href="register_user.php" class="link">
+                        <div style="width: 70px; height:30px; background-color: #E70909; border-radius: 5px; " >
+                            <p >register</p>
+                        </div>
+                    </a>
+                </div>
+            <?php 
+            }
+            ?>
         </div>
     </div>
+
+
+
     <h1 style="text-align: center;" >cari barang</h1>
     <div class="container" >
 
