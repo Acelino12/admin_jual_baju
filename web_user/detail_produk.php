@@ -3,10 +3,12 @@
     include "../db/koneksi.php";
     session_start();
 
+    // membuat format rupiah
     function formatrupiah($rupiah){
         return 'Rp '. number_format($rupiah , 0 , ',' , '.');
     }
 
+    // ambil data produk
     if(isset($_GET['detail'])){
         $id_product = $_GET['detail'];
         $query = "SELECT * FROM tb_product WHERE id_product='$id_product'";
@@ -25,6 +27,7 @@
 
     }
 
+    // ambil data nama user
     if (isset($_SESSION['login_user'])){
         $nameuser = $_SESSION['login_user']['username'];
         $_SESSION['beli'] = $nameuser;
@@ -73,18 +76,20 @@
 <body>
     <!-- header -->
     <div style="width: 100%; height: 60px; background-color: aliceblue; " >
+        <!-- header kiri -->
         <div style="width: 50px; height: 100%; float: left; margin: 15px 10px 0px 10px ; " >
             <div style=" width: 50px; display: flex; height: 30px; text-align: center; align-items: center;" >
                 <a href="home.php" class="btn_back btn btn-danger btn-sm" style="text-align:center;" >back</a>
             </div>
         </div>
 
-        <!-- kanan -->
+        <!-- header kanan -->
         <div style=" display: flex; float: right; width: 250px; height: 100%; text-align: center; align-items: center; " >
             <?php 
                 if (isset($_SESSION['login_user'])){
             ?>
                 <div>
+                    <!-- jika user sudah login -->
                     <a href="" class="link">
                         <div class="dropdown">
                             <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -103,6 +108,7 @@
             <?php 
             } else {
             ?>
+                <!-- jika user belum login -->
                 <div style=" margin: auto; width: 60%; display: flex; " >
                     <a href="login_user.php" class="link" >
                         <div style="width: 50px; height:30px; background-color: #09E74F; border-radius: 5px; " >
@@ -190,11 +196,18 @@
                                     </div>
                                     <br>
                                     <div>
-                                        <?php if(isset($_SESSION['login_user'])){ ?>
+                                        <?php 
+                                        // jika user sudah login
+                                            if(isset($_SESSION['login_user'])){ 
+                                        ?>
                                             <button type="submit" >Beli</button>
-                                        <?php } else { ?>
+                                        <?php 
+                                            } else { 
+                                        ?>
                                             <button onclick="login(); return false" >Beli</button>
-                                        <?php } ?>
+                                        <?php 
+                                            } 
+                                        ?>
                                     </div>
                                 </div>
                             </form>

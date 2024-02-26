@@ -7,6 +7,8 @@ function tambahdata($data,$file){
     $harga = $data['harga'];
     $stok = $data['stok'];
     $detail = $data['detail'];
+    $sisa = $data['stok'];
+    $terjual = 0;
 
     $split1 = explode('.',$file['foto1']['name']);
     $jenisfile1 = $split1[1];
@@ -19,14 +21,15 @@ function tambahdata($data,$file){
     
     if (move_uploaded_file($file["foto1"]["tmp_name"],"img/".$foto1) && move_uploaded_file($file["foto2"]["tmp_name"],"img/".$foto2)) {
         // Pengunggahan berhasil, lanjutkan ke query SQL
-        $query = "INSERT INTO tb_product VALUES (null,'$name', '$harga', '$stok', '$detail', '$foto1', '$foto2')";
-    $sql = mysqli_query($GLOBALS['koneksi'], $query);
+        $query = "INSERT INTO tb_product VALUES (null,'$name', '$harga', '$stok', '$detail', '$foto1', '$foto2','$sisa','$terjual')";
+        $sql = mysqli_query($GLOBALS['koneksi'], $query);
 
-    if (!$sql) {
-        die('Error: ' . mysqli_error($GLOBALS['koneksi']));
-    }
+        if (!$sql) {
+            die('Error: ' . mysqli_error($GLOBALS['koneksi']));
+        }
+        
+        return true;
 
-    return true;
     } else {
         // Gagal mengunggah satu atau kedua file
         die('Error: Gagal mengunggah file.');

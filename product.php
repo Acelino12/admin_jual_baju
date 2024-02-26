@@ -159,8 +159,10 @@
                         <th><center>No.</center></th>
                         <th>Nama Produk</th>
                         <th>Harga</th>
-                        <th>Stok</th>
                         <th>Gambar</th>
+                        <th>Stok</th>
+                        <th>Sisa</th>
+                        <th>Terjual</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -180,10 +182,16 @@
                                 <?php echo $result["harga"]; ?>
                             </td>
                             <td>
+                                <img src="data_product/img/<?php echo $result["gam1"]; ?>" alt="gambar" style="width: 150px;" >
+                            </td>
+                            <td>
                                 <?php echo $result["stok"]; ?>
                             </td>
                             <td>
-                                <img src="data_product/img/<?php echo $result["gam1"]; ?>" alt="gambar" style="width: 150px;" >
+                                <?php echo $result["sisa"]; ?>
+                            </td>
+                            <td>
+                                <?php echo $result["terjual"]; ?>
                             </td>
                             <td>
                                 <a href="data_product/kelola.php?ubah=<?php echo $result["id_product"]; ?>" type="button" class="btn btn-success btn-sm">

@@ -58,7 +58,7 @@
     <!-- header -->
     <div style="width: 100%; height: 60px; background-color: aliceblue; " >
 
-        <!-- kiri -->
+        <!-- header kiri -->
         <div style="width: 100px; height: 100%; float: left; margin: 15px 10px 0px 10px ; " >
             <?php if(!isset($_SESSION['login_user'])){ ?>
                 <div style=" width: 100px; display: flex; height: 30px; text-align: center; align-items: center;" >
@@ -67,11 +67,12 @@
             <?php } ?>
         </div>
 
-        <!-- kanan -->
+        <!-- header kanan -->
         <div style=" display: flex; float: right; width: 250px; height: 100%; text-align: center; align-items: center; " >
             <?php 
                 if (isset($_SESSION['login_user'])){
             ?>
+            <!-- jika user sudah login -->
                 <div>
                     <a href="" class="link">
                         <div class="dropdown">
@@ -91,6 +92,7 @@
             <?php 
             } else {
             ?>
+            <!-- jika user belum login -->
                 <div style=" margin: auto; width: 60%; display: flex; " >
                     <a href="login_user.php" class="link" >
                         <div style="width: 50px; height:30px; background-color: #09E74F; border-radius: 5px; " >
@@ -108,8 +110,6 @@
             ?>
         </div>
     </div>
-
-
 
     <h1 style="text-align: center;" >cari barang</h1>
     <div class="container" >
@@ -138,7 +138,7 @@
                 <?php 
                     $awal_stok = $row['stok'];
                     $sisa_stok = $row['sisa'];
-                    $persen = 100-(($sisa_stok/$awal_stok)*100);                 
+                    $persen = 100-(($sisa_stok/$awal_stok)*100);  //menampilkan persentase               
                 ?>
                 <div class="progress" style="height: 10px;" >
                     <div class="progress-bar" role="progressbar" style="width:<?php echo floor($persen) ; ?>%;" aria-valuenow="<?php echo floor($persen) ; ?>" aria-valuemin="0" aria-valuemax="100"><?php echo floor($persen) ; ?>%</div>

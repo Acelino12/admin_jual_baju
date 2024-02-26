@@ -5,11 +5,13 @@ session_start();
 
 
 if (isset($_SESSION['beli'])){
-    $nameuser = $_SESSION['beli'];
+    $nameuser = $_SESSION['beli']; // ambil nama user
+    
     if(isset($_POST["jumlahbeli"])){
         $total_barang_dibeli = $_POST['jumlahbeli'];
         $id_product = $_POST['id_product'];
 
+        // pengambilan data produk
         $query_product = "SELECT * FROM tb_product WHERE id_product='$id_product' ";
         $sql_product = mysqli_query($koneksi,$query_product);
         $result_product = mysqli_fetch_array($sql_product);
@@ -20,10 +22,12 @@ if (isset($_SESSION['beli'])){
         $gambar = $result_product["gam1"];
         $terjual = $result_product["terjual"];
 
+        // hasil penjumlahan untuk input
         $total_harga = $total_barang_dibeli * $harga;
         $stok_baru = $sisa_awal - $total_barang_dibeli;
         $terjual_baru = $terjual + $total_barang_dibeli;
 
+        // pengambilan data user
         $query_user = "SELECT * FROM tb_user WHERE username='$nameuser'";
         $sql_user = mysqli_query($koneksi, $query_user);
         $result_user = mysqli_fetch_array($sql_user);
@@ -32,16 +36,19 @@ if (isset($_SESSION['beli'])){
         $alamat = $result_user["alamat"];
         $no_hp_user = $result_user["no_hp"];
 
+        // menampilkan tanggal dan waktu beli
         $tanggal_order = date("Y-m-d");
+        date_default_timezone_set('Asia/Jakarta');
         $waktu_order = date("H:i:s");
-
         $status_barang = "Sedang diproses";
 
+        // melakukan penambahan data baru pada tb order
         $query_beli = "INSERT INTO tb_order VALUES (null,'$name_product','$username','$harga','$total_harga','$total_barang_dibeli',
         '$alamat','$gambar','$tanggal_order','$waktu_order','$status_barang','$no_hp_user','$email') ";
         $sql_beli = mysqli_query($koneksi, $query_beli);
 
         if ($sql_beli){
+            // melakukan update pada sisa produk
             $query_update_product = "UPDATE tb_product SET sisa='$stok_baru' , terjual='$terjual_baru' WHERE id_product='$id_product' ";
             $sql_update_product = mysqli_query($koneksi,$query_update_product);
             if($sql_update_product){

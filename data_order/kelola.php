@@ -70,7 +70,7 @@
         <div style="width: 100%;" >
             <div style="width: 48%; float: left; margin: 0px 10px 0px 10px; " >
                 <div style="width: 150px; height: 150px; border-style: solid; border-width: 2px; margin: 0px auto 0px auto; " >
-                    <img src="<?php echo $gambar ?>" alt="gambar produk" style="width:150px; height: 150px; " >
+                    <img src="../data_product/img/<?php echo $gambar ?>" alt="gambar produk" style="width:150px; height: 150px; " >
                 </div>
 
                 <table style="width: 100%;">
@@ -109,6 +109,16 @@
                     <tr>
                         <td style="width: 40%; text-align: right; padding-bottom: 10px; ">Alamat pengiriman :</td>
                         <td style="width: 60%; max-width:100px; max-height:500px; padding-bottom: 10px;" ><mark><?php echo $alamat_pembeli ?></mark></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 40%; text-align: right; padding-bottom: 10px; ">Status barang :</td>
+                        <td style="width: 60%; max-width:90px; max-height:500px; padding-bottom: 10px;" >
+                        <select id="jk" name="status_barang" class="form-select" aria-label="Default select example">
+                            <option <?php if($status_barang == "Sedang diproses"){ echo "selected";} ?> value="Sedang diproses">Sedang diproses</option>
+                            <option <?php if($status_barang == "Dalam pengiriman"){ echo "selected";} ?> value="Dalam pengiriman" >Dalam pengiriman</option>
+                            <option <?php if($status_barang == "Telah sampai"){ echo "selected";} ?> value="Telah sampai" >Telah sampai</option>
+                        </select>
+                        </td>
                     </tr>
                 </table>
             </div>
